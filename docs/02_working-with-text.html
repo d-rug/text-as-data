@@ -188,9 +188,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set-up</a></li>
   <li><a href="#exploring-text-data" id="toc-exploring-text-data" class="nav-link" data-scroll-target="#exploring-text-data">Exploring text data</a></li>
-  <li><a href="#pattern-detection-with-regex" id="toc-pattern-detection-with-regex" class="nav-link" data-scroll-target="#pattern-detection-with-regex">Pattern detection with regex</a>
+  <li><a href="#pattern-detection-with-regex" id="toc-pattern-detection-with-regex" class="nav-link" data-scroll-target="#pattern-detection-with-regex">Pattern detection with regex</a></li>
+  <li><a href="#the-power-of-a-dictionary" id="toc-the-power-of-a-dictionary" class="nav-link" data-scroll-target="#the-power-of-a-dictionary">The power of a dictionary</a>
   <ul class="collapse">
-  <li><a href="#the-power-of-a-dictionary" id="toc-the-power-of-a-dictionary" class="nav-link" data-scroll-target="#the-power-of-a-dictionary">The power of a dictionary</a></li>
   <li><a href="#extracting-matches" id="toc-extracting-matches" class="nav-link" data-scroll-target="#extracting-matches">Extracting matches</a></li>
   <li><a href="#splitting-text-by-ids" id="toc-splitting-text-by-ids" class="nav-link" data-scroll-target="#splitting-text-by-ids">Splitting text by IDs</a></li>
   <li><a href="#bonus-test-as-data-extraction" id="toc-bonus-test-as-data-extraction" class="nav-link" data-scroll-target="#bonus-test-as-data-extraction">Bonus test as data extraction</a></li>
@@ -550,14 +550,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>It is important to know what needs escaped, so have a good look at the cheat sheet! Generally, most punctuation should be escaped, and it doesn’t hurt to escape something that doesn’t need escaped (because slashes need escaped too, which can get a bit messy).</p>
-<section id="the-power-of-a-dictionary" class="level3">
-<h3 class="anchored" data-anchor-id="the-power-of-a-dictionary">The power of a dictionary</h3>
+</section>
+<section id="the-power-of-a-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="the-power-of-a-dictionary">The power of a dictionary</h2>
 <p>Now that we have a sense of regular expressions, we can return to our <code>text</code> strong. Because where things really get interesting is if you have a <em>dictionary</em> that you can use to match to and extract based on. For instance, if we take at look at our data, we have all of these seed companies and associated data – where they’re from, what they sell, how to contact them, etc. What we need to turn this into a nice clean data set is a <strong>key</strong> or dictionary to reference as a pattern for separating our text and pulling out uniform information.</p>
 <p>Let’s start with a key piece of information that can help us: a dictionary of company IDs. This is data I had to request from the catalog (though I could have made it by hand, many dictionaries are, or extracted it some other way). Let’s read in this data frame of IDs:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/ids_04.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 <section id="extracting-matches" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-matches">Extracting matches</h3>
 <p>With these we can try to understand how the IDs match to the test in the catalog. One good function to start with is the <code>str_extract_all()</code> function, which can help us understand – are all of these IDs in the text? How many times?</p>

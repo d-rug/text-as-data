@@ -224,7 +224,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="img/census15_top.png" class="img-fluid"> <img src="img/census15.png" class="img-fluid"></p>
+<p><img src="img/census15_top.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/census15.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -348,7 +351,18 @@ cd chutes for their cultivation. R</code></pre>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="img/p25_boxed.PNG" class="img-fluid"> <img src="img/p25_selected.PNG" class="img-fluid"> <img src="img/p25_highlight.PNG" class="img-fluid"> <img src="img/p25_notes.PNG" class="img-fluid"></p>
+<p><img src="img/p25_boxed.PNG" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/p25_selected.PNG" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/p25_highlight.PNG" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/p25_notes.PNG" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -382,23 +396,40 @@ attr(,"class")
 </div>
 <p>And now we can glimpse the beginning of the text using the <code>substr</code> function in base R. Looking good.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">substr</span>(text, <span class="dv">1</span>, <span class="dv">1515</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">substr</span>(text, <span class="dv">47548</span>, <span class="dv">51310</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Ab2 Abbe Hills Seed, L. J. Krouse, 825 Abbe Hills Road,
-Mt. Vernon, IA 52314. Phone: 319-895-6924. E-mail:
-Ikrouse@cornellcollege.edu. Send SASE for information letter. Sells one variety of Reid's Yellow Dent-type open-pollinated untreated com in one-bushel bags, for livestock feed or silage. Retail and wholesale. Offered 1 corn variety in 2004.
+<pre><code>FIS Fisher's Garden Store, 20750 E. Frontage Road, PO
+Box 236, Belgrade, MT 59714. Phone: 406-388-6052. Free catalog. Breeders and growers of vegetable and flower seeds for high altitudes and short growing seasons including many
+varieties originated by them. Established in Montana in 1923.
+Offered 124 non-hybrid vegetable varieties in 2004 including: 1 asparagus, 11 bean, 4 beet, 1 broccoli, 1 brussels sprout, 6 cabbage, 4 carrot, 2 cauliflower, I celery, I Chinese cabbage, 1 collard, 4 com, 1 cress, 5 cucumber, 1 kale, I kohlrabi, 9 lettuce, 1 melon, 1 onion bunching, 5 onion common, 1 onion other, 2 parsley, I parsnip, 8 pea, 3 pepper, 3 potato, 7 radish, 1 runner bean, 1 rutabaga, I salsify, 1 spinach, 16 squash, 1 sunflower ornamental, 1 sunflower edi-ble. 3 Swiss chard, 9 tomato, 2 turnip and 2 miscellaneous.
 
-ABB Abbott and Cobb, Inc., PO Box 307, Feasterville, PA
-19053-0307. Phone: 215-245-6666. Web Site: www.acseed com. Strictly wholesale. Specializes in sweet com, water-melon, peppers and squash. Offered 55 non-hybrid vegetable varieties in 2004 including: 2 beet, 2 collard, 2 com, 2 cress, 2 kale, 2 melon, 1 mustard greens, 1 okra, 1 onion other, 3 parsley, 4 pepper, 2 radish, I rutabaga, 2 spinach, 15 squash,
-3 Swiss chard, 2 turnip, 4 watermelon and 4 miscellaneous.
+FI3 Florida Mycology Research Center, P.O. Box 18105,
+Pensacola, FL 32523-8105. Phone: 850-327-4378. E-mail:
+FloridaMycology@cs.com Web Site: www.mushroomsfmrc com. $10 for their main catalog (free if you mention reading about them in this Garden Seed Inventory), containing the world's largest selection of mushroom spores and live cultures, growing supplies and publications since 1972.
+Annual subscription to their quarterly color mushroom joural is $20. Retail and wholesale. Offered 74 mushroom varieties in 2004.
 
-Ada Adams-Briscoe Seed Co., 325 E. Second St., P.O. Box 19, Jackson, GA 30233-0019. Phone: 770-775-7826. Fax:
-770-775-7122. E-mail: abseed@juno.com. Web Site:
-www.abseed.com. Free catalog. Specializes in farm, lawn and wildlife seed that is grown in the southeastern U.S.
-Retail and wholesale. Offered 125 non-hybrid vegetable varieties in 2004 including: 16 bean, 1 beet, 1 broccoli, 4
-cabbage, 1 Chinese cabbage, 3 collard, 9 com, 19 cowpea, 3
-cucumber, 1 eggplant, 2 kale, 4 lettuce, 10 lima, 4 melon, 2 mustard greens, 4 okra, 6 pea, 6 pepper, 3 radish, 1 spinach, 9 squash, 1 sunflower ornamental, 1 sunflower edible, 4 tomato, 4 turnip, 1 miscellaneous leguminosae and 5 miscel-
-laneous.</code></pre>
+FO4 Four Seasons Nursery, Division of Plantron, Inc.,
+1706 Morrissey Drive, Bloomington, IL 61704. Phone: 309-
+663-9551. E-mail: customerservice@seasonsnurseries.com.
+Web Site: www.4seasonsnurseries.com. Free catalog. Retail only. Offered 1 leek in 2004.
+
+FO7 Fox Hollow Seed Company, 204 Arch Street, Kittan-~~~ OUT OF BUSINESS ning, PA 16201. E-mail: seeds@alltel.net. Web Site: www.foxhollowseed.com. Free catalog. Specializes in open-pollinated, heirloom, untreated varieties including many certified organic vegetable seeds. Retail only. Offered 327
+non-hybrid vegetable varieties in 2004 including: 42 bean, 3
+beet, 2 broccoli, 1 brussels sprout, 8 cabbage, 1 cardoon, 8 carrot, 2 cauliflower, 1 celeriac, I celery, 3 Chinese cabbage, 4 chicory, 2 collard, 10 com, I comsalad, 3 cress, 7 cucum-ber, 2 eggplant, 2 endive, I fava bean, 1 fennel, 2 kale, 1 kohlrabi, I leek, 23 lettuce, 7 lima, 7 melon, 1 mustard greens, 1 okra, 9 onion common, 2 onion other, 4 parsley, 1 parsnip, 12 pea, 37 pepper, 9 radish, 2 runner bean, rutabaga, 1 salsify, 2 sorghum, 2 spinach, 13 squash, sunflower edible, 2 Swiss chard, 1 tomatillo, 60 tomato, 4 tumip, 7 watermelon, I miscellaneous cucurbitaceae and 8 miscellaneous.
+
+FO13 Forget Me Not Heritage Seed, 729 Erbsville Road,
+Waterloo, ON N2J 3Z4, Canada. Web Site: www. forgetmenotseeds.com. On-line catalog. Will ship small quantities of seed to the U.S. for home garden use. Offers untreated, open-pollinated seed grown with respect for the earth. Offered 58 non-hybrid vegetable varieties in 2004
+including: 7 bean, 3 beet, I broccoli, 2 cabbage, 2 carrot, 3 cucumber, 4 lettuce. 1 mustard greens, 3 onion common, onion other, 3 pea, 5 pepper, 1 radish, 2 runner bean, spinach, 4 squash, I Swiss chard and 14 tomato.
+
+FRE Fred's Plant Farm, 4589 Ralston Road, Martin, IN
+38237. Phone: 800-550-2575. Free catalog. Extensive collection of sweet potatoes and yams, including some old-timers. Retail and wholesale. Offered 9 sweet potato varieties in 2004.
+
+Fun Fungi Perfecti, PO Box 7634, Olympia, WA 98507.
+Phone:
+360-426-9292. Fax: 360-426-9377. E-mail:
+my
+comedia@aol.com. Web Site: www.fungi.com. Free bro-chure. $4.95 for 80-page catalog. Family-owned business specializing in high-quality gourmet and medicinal mushroom kits, spawn, plug spawn, along with equipment and techniques for their cultivation. Retail and wholesale.
+Offered 16 mushroom varieties in 2004.</code></pre>
 </div>
 </div>
 <p>So, now let’s get into actually using these data…</p>
