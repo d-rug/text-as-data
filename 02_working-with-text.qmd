@@ -1,0 +1,340 @@
+---
+title: "Working with text"
+editor: visual
+---
+
+## Set-up
+
+First things first, let's make sure we have all of our text data in. We can go ahead and read it in from GitHub. 
+
+```{r}
+text <- readtext::readtext("data/sse_seed_inventory_04.txt")[,2]
+```
+
+Let's also make sure that we have our main package installed and loaded: the `stringr` package.
+
+```{r}
+#install.packages('stringr')
+library(stringr)
+```
+
+## Exploring text data  
+
+Let's start by taking a look at our data to understand what it is we're starting with. We've got a character string that only has a length of 1 -- it is not yet broken up -- but it is long. It has 186 thousand characters.  
+
+```{r}
+typeof(text)
+```
+
+```{r}
+length(text)
+```
+
+```{r}
+nchar(text)
+```
+
+Now, there are other base R ways of exploring text data, but we are going to focus on the `stringr` package and the functionality it offers. I'm a big fan on the [stringr cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf) and rely on it almost every time I work with text. I like this package because, in addition to the useful cheat sheet, it has intuitive function names that can let you explore strings. For example, can I detect the word 'kale' anywhere in this string?
+
+```{r}
+str_detect(text, 'kale')
+```
+
+Okay, great. How many times?
+
+```{r}
+str_count(text, 'kale')
+```
+
+140 mentions of kale, excellent. But where?
+
+```{r}
+str_locate(text, 'kale')
+```
+
+This is an identification of location using character numbers. We can confirm that by pulling out those character number numbers as 'sub-strings':
+
+```{r}
+str_sub(text, 642, 645)
+```
+
+But there are supposed to be 140 of these. I want all of their location. 
+
+```{r}
+str_locate_all(text, 'kale')
+```
+
+So, `stringr` is fairly intuitive and fun, but to get more serious with text we are going to layer on two components: 1) pattern detection with regular expressions (regex) and 2) using 'dictionaries' to parse apart long strings.  
+
+## Pattern detection with regex
+
+Let's start by taking a look at any of the `stringr` functions' help file an cue into what it describes for the pattern argument.  
+
+```{r}
+?str_locate
+```
+
+For the pattern argument, we see this description: "The default interpretation is a regular expression, as described in vignette("regular-expressions")." We can take a look at that vignette, which defines: **Regular expressions are a concise and flexible tool for describing patterns in strings**
+
+What does this mean? I personally love the second page the stringr cheat sheet for guidance on this.
+
+```{r, fig.align='center'}
+knitr::include_graphics("img/stringr_cheatsheet.png")
+```
+
+And to make it tangible, let's first use a fun, short character string to understand these various features. 
+
+```{r}
+veg <- "kale, tomato, Kale, pepper, Artichoke, pea$, peppers, tomato"
+```
+
+
+**Alternates**
+
+First, let's try to kind the locations of all the kale.  
+
+```{r}
+str_locate_all(veg, "kale")
+```
+
+Close, but it only gives me one of the kale locations. Why? String patterns are case sensitive. So, one way of detecing both is to write out our pattern using the 'or' symbol `|`.
+
+```{r}
+str_locate_all(veg, "kale|Kale")
+```
+
+But this isn't very efficient because we are trying each pattern rather than using regex to generalize. So instead, we could give it *alternates* using square brackets to indicate that the 'k' can be either upper or lower case.
+
+```{r}
+str_locate_all(veg, "[Kk]ale")
+```
+
+**Quantifiers**
+
+Next, let's locate peppers.
+
+```{r}
+str_locate_all(veg, "peppers")
+```
+
+The thing is, we have one 'pepper', and one 'peppers'. Again, we could use the or symbol to specify both, but that is inefficient. So another way to identify both is by using a *quantifier* to suggest that there may be one or more 's' appended to 'pepper'. The `?` quantifier suggests that there might be zero or one of the characters immediately preceding it. Now it can locate 'pepper' and/or 'peppers' because the pattern identifiers that were might be zero 's's or one 's' attached to 'peppers'. Bothb match the pattern.  
+
+```{r}
+str_locate_all(veg, "peppers?")
+```
+
+**Look arounds and anchors**
+
+What if instead of grabbing all of the identical patterns, I wanted just some particular match of a pattern, for example, just the first 'tomato'. Right now, there are identical objects in our string so the pattern matches both.
+
+```{r}
+str_locate_all(veg, 'tomato')
+```
+
+Of course we could index from the `str_locate_all` function, but let's do it with regex instead. We can use look arounds to get specific. What if we want the 'tomato' pattern only if its followed by the pattern ', Kale'? We can use the *look around* to specify where tomato is in relation to other patterns.
+
+```{r}
+str_locate_all(veg, 'tomato(?=, Kale)')
+```
+
+On the flip side, what if we just just wanted the word tomato if it is at the end of the string? We can use an *anchor* to specify that the pattern needs to be the last thing in the string.
+
+```{r}
+str_locate_all(veg, 'tomato$')
+```
+
+Playing with regular expressions and all their functionality will help you figure out what tools can be used for what tasks. 
+
+**Escaping special characters**
+
+Sometimes we want to use special characters for good and other times we want the literal character in our pattern. For instances, what if I want regex to find the word 'peas' spelled with a dollar sign 'pea\$'. Because \$ is a special symbol in regex (remember, it is an anchor suggesting that in this pattern, pea is at the end of the string), `stringr` can't find it at first.  
+
+```{r}
+str_locate(veg, "pea$")
+```
+
+If you want regex to detect the symbol, rather than interpret the regex meaning of the symbol, you can escape it with two backslashes:
+
+```{r}
+str_locate(veg, "pea\\$")
+```
+
+It is important to know what needs escaped, so have a good look at the cheat sheet! Generally, most punctuation should be escaped, and it doesn't hurt to escape something that doesn't need escaped (because slashes need escaped too, which can get a bit messy). 
+
+### The power of a dictionary  
+
+Now that we have a sense of regular expressions, we can return to our `text` strong. Because where things really get interesting is if you have a *dictionary* that you can use to match to and extract based on. For instance, if we take at look at our data, we have all of these seed companies and associated data -- where they're from, what they sell, how to contact them, etc. What we need to turn this into a nice clean data set is a **key** or dictionary to reference as a pattern for separating our text and pulling out uniform information. 
+
+Let's start with a key piece of information that can help us: a dictionary of company IDs. This is data I had to request from the catalog (though I could have made it by hand, many dictionaries are, or extracted it some other way). Let's read in this data frame of IDs:  
+
+```{r}
+ids <- read.csv('data/ids_04.csv')
+```
+
+### Extracting matches  
+
+With these we can try to understand how the IDs match to the test in the catalog. One good function to start with is the `str_extract_all()` function, which can help us understand -- are all of these IDs in the text? How many times?
+
+```{r}
+ids_matched <- str_extract_all(text, ids$vendorid)
+```
+
+The extract functions output a list, and what we see here is that some of the patterns have been detected multiple times.
+
+```{r}
+head(ids_matched)
+```
+
+
+```{r}
+which(lengths(ids_matched) > 1)
+```
+
+These repeates are likely because these patterns are both IDs **and** they exist in other words, like "Bounty" or "Boundary" that might come up also in this text. To overcome this, remember that regex has several special matching characters. For instance, we could tell regex that we want these patterns to be detected with *word boundaries* -- meaning that are not housed within other words. Word boundaries are denoted by the `\\b` characters, which we can paste around our IDs.  
+
+```{r}
+ids$vendorid_bounded <- paste0("\\b", ids$vendorid, "\\b")
+head(ids$vendorid_bounded)
+```
+
+Now let's try again. 
+
+```{r}
+ids_matched <- str_extract_all(text, ids$vendorid_bounded)
+which(lengths(ids_matched) > 1)
+```
+
+Now we have much fewer repeats. Andwhat's left are the IDs that match stand-alone words (mostly), and so this seems more reasonable to make the pattern more exact for these few cases.  
+
+```{r}
+ids$vendorid_bounded[ids$vendorid_bounded == "\\bMay\\b"] <- "May Earl May Seed"
+ids$vendorid_bounded[ids$vendorid_bounded == "\\bAll\\b"] <- "All Allen"
+ids$vendorid_bounded[ids$vendorid_bounded == "\\bLOC\\b"] <- "LOC Lockhart Seeds"
+```
+
+Now if we try again we can see we have no repeats.  
+```{r}
+ids_matched <- str_extract_all(text, ids$vendorid_bounded)
+which(lengths(ids_matched) > 1)
+```
+
+Now that there are no multiple matches, we can bind this list into a data.frame. Note that we only have 260 IDs in the text compared to the 351 ids we read in, but that is an issue for another time.  
+
+```{r}
+ids_df <- data.frame("id" = do.call('rbind', ids_matched))
+```
+
+### Splitting text by IDs  
+
+For now, let's say we have 260 identifiable vendors in our text. Now we want to **split** our giant string by these IDs. We know that the catalog is indexed in alphabetical order according to the ids, so let's first get ourselves set up so that our IDs are also alphabetical.  
+
+```{r}
+ids_df$id <- sort(ids_df$id)
+```
+
+Now the hard part. We want to split apart the text each ID, and keep the text in between as our metadata. If we do this with the vector of IDs, we don't get very far.
+
+```{r}
+text_split <- str_split(text, ids_df$id)
+```
+
+If we open this up we see that each item in the list starts at the beginning, with the first pattern. This is because we aren't feeding `str_split` a pattern. Right now ids_df$id is a vector. Note: we were allowed to give `str_extract_all` a vector earlier because the _all element of that function vectorizes across the pattern (I think?).  
+
+So to make this a pattern, we once again want each ID to be recognized as its own unique pattern, so let's again wrap these with word boundaries and this time, collapse them with the `|` or symbol.  
+
+```{r}
+ids_bounded_pattern <- paste(ids_df$id, collapse = "\\b|\\b")
+ids_bounded_pattern <- paste0('\\b', ids_bounded_pattern, '\\b')
+str_sub(ids_bounded_pattern, 1,48)
+```
+
+Now we can split the string based on this pattern of IDs that are surrounded by word boundaries, separated using the or symbol.
+
+```{r}
+text_split <- str_split(text, ids_bounded_pattern)
+```
+
+Now, let's check out this object.
+
+```{r}
+lengths(text_split)
+text_split[[1]][1]
+text_split[[1]][2]
+text_split[[1]][3]
+```
+It looks pretty good. The first item in the list has a length of 261 (*almost* the same as our IDs). And if we look at a few we see that the first is empty but the rest are stand-alone company profiles. So Let's make this first item (minus the first row) into a data frame. 
+```{r}
+text_df <- data.frame("text" = text_split[[1]][-1])
+```
+
+And let's bind it to our IDs. Note, we feel confident binding this because these are the same IDs we used to split on -- this is why we organized them into alphabetical order! 
+```{r}
+df <- cbind(ids_df, text_df)
+head(df)
+```
+
+
+Excellent. Now we have split our data based on IDs. Now we have our text data as a data frame. One good tip is to clean things up a little bit by cleaning whitespace on the sides.  
+
+```{r}
+df$id <- trimws(df$id)
+df$text <- trimws(df$text)
+```
+
+### Bonus test as data extraction  
+
+To finalize these data, let's ask ourselves some bonus questions about these data. For instance: 
+
+1.  Which of these companies work with organic varieties?
+2.  Which of these companies have my favorite vegetables?
+3.  Which state are these companies in?
+
+We can apply what we've learned from `stringr` to answer these questions easily now that we have unique blocks of text to work with. For instance, we can use a `str_detect` now to get TRUE or FALSE for each row for certain patterns, like organic. 
+
+```{r}
+df$organic <- str_detect(df$text, '[Oo]rganic')
+head(df$organic)
+```
+
+We can do something similar for vegetables, where we can create a pattern of our favorite vegetables, with alternates, and look for that in each row.  
+
+```{r}
+faves <- c("[Ss]quash", "[Rr]adish", "[Bb]ean")
+faves_pattern <- paste(faves, collapse = "|")
+df$fave_veg <- str_detect(df$text, faves_pattern)
+table(df$fave_veg)
+```
+
+Last, we can make a pattern with all of the state abbreviations, though instead of separating just by word boundaries, we want to be careful to grab true state abbreviations. We can do that by making the pattern in front of it include a comma and a space, since we know that is how addresses are written.  
+
+```{r}
+states <- c("CA", "OR", "WA", "ID", "NV", "AZ", "UT", "NM", "CO", "WY", "MT",
+            "AK", "HI", "ND", "SD", "KS", "NE", "MN", "IA", "MO", "WI", "IL",
+            "MI", "IN", "OH", "TX", "OK", "AR", "LA", "KY", "TN", "MS", "AL",
+            "FL", "GA", "SC", "NC", "VA", "PR", "WV", "MD", "DE", "NJ", "PA",
+            "NY", "CT", "RI", "MA", "VT", "NH", "ME")
+states_pattern <- paste0(',\\s', states, '\\b')
+states_pattern <- paste(states_pattern, collapse = "|")
+str_sub(states_pattern, 1,47)
+```
+
+Now we can `str_extract`, rather than `str_detect` to pull out the matches from the text. We are going to use `str_extract` instead of _all to choose the first one. There is still some data messiness beyond this lesson that would need addressed if we wanted to use _all. 
+```{r}
+df$state <- str_extract(df$text, states_pattern)
+head(df$state)
+```
+
+Great, we have state IDs, but let's make those a little cleaner with `str_remove`. 
+
+```{r}
+df$state <- trimws(str_remove(df$state, ",\\s"))
+```
+
+Now, we can create an output with our local picks by filtering based on what we've identified in our data. 
+```{r}
+local_picks <- dplyr::filter(df, state == "CA" & organic == T & fave_veg == T)
+```
+
+```{r}
+local_picks$text
+```

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Text as data - 3&nbsp; Working with text</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01_text-data.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Working with text</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="https://github.com/d-rug/d-rug.github.io/raw/main/DRUG_final_cobalt.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Text as data</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/d-rug/text-as-data" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="./Text-as-data.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_text-data.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Text as data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_working-with-text.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Working with text</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set-up</a></li>
+  <li><a href="#exploring-text-data" id="toc-exploring-text-data" class="nav-link" data-scroll-target="#exploring-text-data">Exploring text data</a></li>
+  <li><a href="#pattern-detection-with-regex" id="toc-pattern-detection-with-regex" class="nav-link" data-scroll-target="#pattern-detection-with-regex">Pattern detection with regex</a>
+  <ul class="collapse">
+  <li><a href="#the-power-of-a-dictionary" id="toc-the-power-of-a-dictionary" class="nav-link" data-scroll-target="#the-power-of-a-dictionary">The power of a dictionary</a></li>
+  <li><a href="#extracting-matches" id="toc-extracting-matches" class="nav-link" data-scroll-target="#extracting-matches">Extracting matches</a></li>
+  <li><a href="#splitting-text-by-ids" id="toc-splitting-text-by-ids" class="nav-link" data-scroll-target="#splitting-text-by-ids">Splitting text by IDs</a></li>
+  <li><a href="#bonus-test-as-data-extraction" id="toc-bonus-test-as-data-extraction" class="nav-link" data-scroll-target="#bonus-test-as-data-extraction">Bonus test as data extraction</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Working with text</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">Set-up</h2>
+<p>First things first, let’s make sure we have all of our text data in. We can go ahead and read it in from GitHub.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(<span class="st">"data/sse_seed_inventory_04.txt"</span>)[,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s also make sure that we have our main package installed and loaded: the <code>stringr</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('stringr')</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exploring-text-data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-text-data">Exploring text data</h2>
+<p>Let’s start by taking a look at our data to understand what it is we’re starting with. We’ve got a character string that only has a length of 1 – it is not yet broken up – but it is long. It has 186 thousand characters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 185723</code></pre>
+</div>
+</div>
+<p>Now, there are other base R ways of exploring text data, but we are going to focus on the <code>stringr</code> package and the functionality it offers. I’m a big fan on the <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">stringr cheat sheet</a> and rely on it almost every time I work with text. I like this package because, in addition to the useful cheat sheet, it has intuitive function names that can let you explore strings. For example, can I detect the word ‘kale’ anywhere in this string?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(text, <span class="st">'kale'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Okay, great. How many times?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_count</span>(text, <span class="st">'kale'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 140</code></pre>
+</div>
+</div>
+<p>140 mentions of kale, excellent. But where?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(text, <span class="st">'kale'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     start end
+[1,]   642 645</code></pre>
+</div>
+</div>
+<p>This is an identification of location using character numbers. We can confirm that by pulling out those character number numbers as ‘sub-strings’:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(text, <span class="dv">642</span>, <span class="dv">645</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "kale"</code></pre>
+</div>
+</div>
+<p>But there are supposed to be 140 of these. I want all of their location.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(text, <span class="st">'kale'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+        start    end
+  [1,]    642    645
+  [2,]   1293   1296
+  [3,]   1952   1955
+  [4,]   3550   3553
+  [5,]   4364   4367
+  [6,]   5158   5161
+  [7,]   5991   5994
+  [8,]   7197   7200
+  [9,]   8741   8744
+ [10,]  13180  13183
+ [11,]  13943  13946
+ [12,]  14890  14893
+ [13,]  16933  16936
+ [14,]  19051  19054
+ [15,]  20097  20100
+ [16,]  20916  20919
+ [17,]  21645  21648
+ [18,]  23705  23708
+ [19,]  24753  24756
+ [20,]  25345  25348
+ [21,]  26141  26144
+ [22,]  26796  26799
+ [23,]  27574  27577
+ [24,]  28560  28563
+ [25,]  29848  29851
+ [26,]  30989  30992
+ [27,]  32656  32659
+ [28,]  33609  33612
+ [29,]  35838  35841
+ [30,]  37232  37235
+ [31,]  38105  38108
+ [32,]  42464  42467
+ [33,]  43390  43393
+ [34,]  44913  44916
+ [35,]  45879  45882
+ [36,]  48068  48071
+ [37,]  49747  49750
+ [38,]  51896  51899
+ [39,]  54870  54873
+ [40,]  55690  55693
+ [41,]  58730  58733
+ [42,]  60115  60118
+ [43,]  61349  61352
+ [44,]  63600  63603
+ [45,]  64492  64495
+ [46,]  66061  66064
+ [47,]  67087  67090
+ [48,]  68057  68060
+ [49,]  69287  69290
+ [50,]  70083  70086
+ [51,]  71169  71172
+ [52,]  72453  72456
+ [53,]  73728  73731
+ [54,]  74338  74341
+ [55,]  76126  76129
+ [56,]  77176  77179
+ [57,]  78111  78114
+ [58,]  79127  79130
+ [59,]  80344  80347
+ [60,]  81310  81313
+ [61,]  82651  82654
+ [62,]  83407  83410
+ [63,]  84373  84376
+ [64,]  85764  85767
+ [65,]  87261  87264
+ [66,]  88991  88994
+ [67,]  89804  89807
+ [68,]  90696  90699
+ [69,]  92601  92604
+ [70,]  93432  93435
+ [71,]  95678  95681
+ [72,]  96775  96778
+ [73,]  97656  97659
+ [74,]  99018  99021
+ [75,]  99768  99771
+ [76,] 101719 101722
+ [77,] 104010 104013
+ [78,] 105083 105086
+ [79,] 107242 107245
+ [80,] 108319 108322
+ [81,] 109102 109105
+ [82,] 109959 109962
+ [83,] 110759 110762
+ [84,] 111497 111500
+ [85,] 113227 113230
+ [86,] 114271 114274
+ [87,] 117070 117073
+ [88,] 118504 118507
+ [89,] 120008 120011
+ [90,] 121229 121232
+ [91,] 122781 122784
+ [92,] 124346 124349
+ [93,] 126711 126714
+ [94,] 127737 127740
+ [95,] 128508 128511
+ [96,] 129612 129615
+ [97,] 131206 131209
+ [98,] 132070 132073
+ [99,] 132967 132970
+[100,] 134240 134243
+[101,] 135875 135878
+[102,] 137392 137395
+[103,] 138474 138477
+[104,] 139573 139576
+[105,] 140383 140386
+[106,] 141792 141795
+[107,] 142905 142908
+[108,] 143877 143880
+[109,] 144639 144642
+[110,] 145541 145544
+[111,] 146598 146601
+[112,] 147068 147071
+[113,] 148788 148791
+[114,] 149680 149683
+[115,] 151815 151818
+[116,] 152647 152650
+[117,] 153246 153249
+[118,] 154323 154326
+[119,] 155364 155367
+[120,] 156140 156143
+[121,] 157822 157825
+[122,] 158423 158426
+[123,] 159449 159452
+[124,] 161266 161269
+[125,] 162559 162562
+[126,] 163278 163281
+[127,] 164602 164605
+[128,] 165537 165540
+[129,] 166343 166346
+[130,] 169743 169746
+[131,] 170555 170558
+[132,] 171479 171482
+[133,] 174895 174898
+[134,] 176108 176111
+[135,] 178183 178186
+[136,] 179836 179839
+[137,] 180980 180983
+[138,] 182393 182396
+[139,] 183758 183761
+[140,] 184981 184984</code></pre>
+</div>
+</div>
+<p>So, <code>stringr</code> is fairly intuitive and fun, but to get more serious with text we are going to layer on two components: 1) pattern detection with regular expressions (regex) and 2) using ‘dictionaries’ to parse apart long strings.</p>
+</section>
+<section id="pattern-detection-with-regex" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-detection-with-regex">Pattern detection with regex</h2>
+<p>Let’s start by taking a look at any of the <code>stringr</code> functions’ help file an cue into what it describes for the pattern argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>?str_locate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the pattern argument, we see this description: “The default interpretation is a regular expression, as described in vignette(”regular-expressions”).” We can take a look at that vignette, which defines: <strong>Regular expressions are a concise and flexible tool for describing patterns in strings</strong></p>
+<p>What does this mean? I personally love the second page the stringr cheat sheet for guidance on this.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/stringr_cheatsheet.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/stringr_cheatsheet.png" class="img-fluid figure-img" width="741"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And to make it tangible, let’s first use a fun, short character string to understand these various features.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>veg <span class="ot">&lt;-</span> <span class="st">"kale, tomato, Kale, pepper, Artichoke, pea$, peppers, tomato"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Alternates</strong></p>
+<p>First, let’s try to kind the locations of all the kale.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">"kale"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]     1   4</code></pre>
+</div>
+</div>
+<p>Close, but it only gives me one of the kale locations. Why? String patterns are case sensitive. So, one way of detecing both is to write out our pattern using the ‘or’ symbol <code>|</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">"kale|Kale"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]     1   4
+[2,]    15  18</code></pre>
+</div>
+</div>
+<p>But this isn’t very efficient because we are trying each pattern rather than using regex to generalize. So instead, we could give it <em>alternates</em> using square brackets to indicate that the ‘k’ can be either upper or lower case.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">"[Kk]ale"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]     1   4
+[2,]    15  18</code></pre>
+</div>
+</div>
+<p><strong>Quantifiers</strong></p>
+<p>Next, let’s locate peppers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">"peppers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]    46  52</code></pre>
+</div>
+</div>
+<p>The thing is, we have one ‘pepper’, and one ‘peppers’. Again, we could use the or symbol to specify both, but that is inefficient. So another way to identify both is by using a <em>quantifier</em> to suggest that there may be one or more ‘s’ appended to ‘pepper’. The <code>?</code> quantifier suggests that there might be zero or one of the characters immediately preceding it. Now it can locate ‘pepper’ and/or ‘peppers’ because the pattern identifiers that were might be zero ‘s’s or one ’s’ attached to ‘peppers’. Bothb match the pattern.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">"peppers?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]    21  26
+[2,]    46  52</code></pre>
+</div>
+</div>
+<p><strong>Look arounds and anchors</strong></p>
+<p>What if instead of grabbing all of the identical patterns, I wanted just some particular match of a pattern, for example, just the first ‘tomato’. Right now, there are identical objects in our string so the pattern matches both.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">'tomato'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]     7  12
+[2,]    55  60</code></pre>
+</div>
+</div>
+<p>Of course we could index from the <code>str_locate_all</code> function, but let’s do it with regex instead. We can use look arounds to get specific. What if we want the ‘tomato’ pattern only if its followed by the pattern ‘, Kale’? We can use the <em>look around</em> to specify where tomato is in relation to other patterns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">'tomato(?=, Kale)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]     7  12</code></pre>
+</div>
+</div>
+<p>On the flip side, what if we just just wanted the word tomato if it is at the end of the string? We can use an <em>anchor</em> to specify that the pattern needs to be the last thing in the string.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate_all</span>(veg, <span class="st">'tomato$'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+     start end
+[1,]    55  60</code></pre>
+</div>
+</div>
+<p>Playing with regular expressions and all their functionality will help you figure out what tools can be used for what tasks.</p>
+<p><strong>Escaping special characters</strong></p>
+<p>Sometimes we want to use special characters for good and other times we want the literal character in our pattern. For instances, what if I want regex to find the word ‘peas’ spelled with a dollar sign ‘pea$’. Because $ is a special symbol in regex (remember, it is an anchor suggesting that in this pattern, pea is at the end of the string), <code>stringr</code> can’t find it at first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(veg, <span class="st">"pea$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     start end
+[1,]    NA  NA</code></pre>
+</div>
+</div>
+<p>If you want regex to detect the symbol, rather than interpret the regex meaning of the symbol, you can escape it with two backslashes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(veg, <span class="st">"pea</span><span class="sc">\\</span><span class="st">$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     start end
+[1,]    40  43</code></pre>
+</div>
+</div>
+<p>It is important to know what needs escaped, so have a good look at the cheat sheet! Generally, most punctuation should be escaped, and it doesn’t hurt to escape something that doesn’t need escaped (because slashes need escaped too, which can get a bit messy).</p>
+<section id="the-power-of-a-dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="the-power-of-a-dictionary">The power of a dictionary</h3>
+<p>Now that we have a sense of regular expressions, we can return to our <code>text</code> strong. Because where things really get interesting is if you have a <em>dictionary</em> that you can use to match to and extract based on. For instance, if we take at look at our data, we have all of these seed companies and associated data – where they’re from, what they sell, how to contact them, etc. What we need to turn this into a nice clean data set is a <strong>key</strong> or dictionary to reference as a pattern for separating our text and pulling out uniform information.</p>
+<p>Let’s start with a key piece of information that can help us: a dictionary of company IDs. This is data I had to request from the catalog (though I could have made it by hand, many dictionaries are, or extracted it some other way). Let’s read in this data frame of IDs:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/ids_04.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extracting-matches" class="level3">
+<h3 class="anchored" data-anchor-id="extracting-matches">Extracting matches</h3>
+<p>With these we can try to understand how the IDs match to the test in the catalog. One good function to start with is the <code>str_extract_all()</code> function, which can help us understand – are all of these IDs in the text? How many times?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ids_matched <span class="ot">&lt;-</span> <span class="fu">str_extract_all</span>(text, ids<span class="sc">$</span>vendorid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The extract functions output a list, and what we see here is that some of the patterns have been detected multiple times.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ids_matched)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Red2"
+
+[[2]]
+[1] "MI12"
+
+[[3]]
+[1] "Ri12"
+
+[[4]]
+[1] "Se7"
+
+[[5]]
+[1] "Na2"
+
+[[6]]
+[1] "Bou" "Bou" "Bou" "Bou"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">lengths</span>(ids_matched) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   6  10  15  19  22  24  26  32  33  37  39  42  44  47  48  49  56  57  59
+[20]  62  63  67  82  89 102 108 122 126 131 141 146 148 149 157 161 163 168 173
+[39] 176 179 191 195 203 204 226 239 249 262 264 280 285 289 304 305 306 310 341
+[58] 348</code></pre>
+</div>
+</div>
+<p>These repeates are likely because these patterns are both IDs <strong>and</strong> they exist in other words, like “Bounty” or “Boundary” that might come up also in this text. To overcome this, remember that regex has several special matching characters. For instance, we could tell regex that we want these patterns to be detected with <em>word boundaries</em> – meaning that are not housed within other words. Word boundaries are denoted by the <code>\\b</code> characters, which we can paste around our IDs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>ids<span class="sc">$</span>vendorid_bounded <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b"</span>, ids<span class="sc">$</span>vendorid, <span class="st">"</span><span class="sc">\\</span><span class="st">b"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ids<span class="sc">$</span>vendorid_bounded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "\\bRed2\\b" "\\bMI12\\b" "\\bRi12\\b" "\\bSe7\\b"  "\\bNa2\\b" 
+[6] "\\bBou\\b" </code></pre>
+</div>
+</div>
+<p>Now let’s try again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>ids_matched <span class="ot">&lt;-</span> <span class="fu">str_extract_all</span>(text, ids<span class="sc">$</span>vendorid_bounded)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">lengths</span>(ids_matched) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 149 168 191</code></pre>
+</div>
+</div>
+<p>Now we have much fewer repeats. Andwhat’s left are the IDs that match stand-alone words (mostly), and so this seems more reasonable to make the pattern more exact for these few cases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>ids<span class="sc">$</span>vendorid_bounded[ids<span class="sc">$</span>vendorid_bounded <span class="sc">==</span> <span class="st">"</span><span class="sc">\\</span><span class="st">bMay</span><span class="sc">\\</span><span class="st">b"</span>] <span class="ot">&lt;-</span> <span class="st">"May Earl May Seed"</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>ids<span class="sc">$</span>vendorid_bounded[ids<span class="sc">$</span>vendorid_bounded <span class="sc">==</span> <span class="st">"</span><span class="sc">\\</span><span class="st">bAll</span><span class="sc">\\</span><span class="st">b"</span>] <span class="ot">&lt;-</span> <span class="st">"All Allen"</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>ids<span class="sc">$</span>vendorid_bounded[ids<span class="sc">$</span>vendorid_bounded <span class="sc">==</span> <span class="st">"</span><span class="sc">\\</span><span class="st">bLOC</span><span class="sc">\\</span><span class="st">b"</span>] <span class="ot">&lt;-</span> <span class="st">"LOC Lockhart Seeds"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now if we try again we can see we have no repeats.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>ids_matched <span class="ot">&lt;-</span> <span class="fu">str_extract_all</span>(text, ids<span class="sc">$</span>vendorid_bounded)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">lengths</span>(ids_matched) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+</div>
+<p>Now that there are no multiple matches, we can bind this list into a data.frame. Note that we only have 260 IDs in the text compared to the 351 ids we read in, but that is an issue for another time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>ids_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="fu">do.call</span>(<span class="st">'rbind'</span>, ids_matched))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="splitting-text-by-ids" class="level3">
+<h3 class="anchored" data-anchor-id="splitting-text-by-ids">Splitting text by IDs</h3>
+<p>For now, let’s say we have 260 identifiable vendors in our text. Now we want to <strong>split</strong> our giant string by these IDs. We know that the catalog is indexed in alphabetical order according to the ids, so let’s first get ourselves set up so that our IDs are also alphabetical.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>ids_df<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">sort</span>(ids_df<span class="sc">$</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now the hard part. We want to split apart the text each ID, and keep the text in between as our metadata. If we do this with the vector of IDs, we don’t get very far.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>text_split <span class="ot">&lt;-</span> <span class="fu">str_split</span>(text, ids_df<span class="sc">$</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we open this up we see that each item in the list starts at the beginning, with the first pattern. This is because we aren’t feeding <code>str_split</code> a pattern. Right now ids_df$id is a vector. Note: we were allowed to give <code>str_extract_all</code> a vector earlier because the _all element of that function vectorizes across the pattern (I think?).</p>
+<p>So to make this a pattern, we once again want each ID to be recognized as its own unique pattern, so let’s again wrap these with word boundaries and this time, collapse them with the <code>|</code> or symbol.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>ids_bounded_pattern <span class="ot">&lt;-</span> <span class="fu">paste</span>(ids_df<span class="sc">$</span>id, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">b|</span><span class="sc">\\</span><span class="st">b"</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>ids_bounded_pattern <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">b'</span>, ids_bounded_pattern, <span class="st">'</span><span class="sc">\\</span><span class="st">b'</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(ids_bounded_pattern, <span class="dv">1</span>,<span class="dv">48</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "\\bAb2\\b|\\bABB\\b|\\bAda\\b|\\bAG7\\b|\\bAL25\\b|\\bAL6\\b"</code></pre>
+</div>
+</div>
+<p>Now we can split the string based on this pattern of IDs that are surrounded by word boundaries, separated using the or symbol.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>text_split <span class="ot">&lt;-</span> <span class="fu">str_split</span>(text, ids_bounded_pattern)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s check out this object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lengths</span>(text_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 261</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>text_split[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ""</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>text_split[[<span class="dv">1</span>]][<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] " Abbe Hills Seed, L. J. Krouse, 825 Abbe Hills Road,\nMt. Vernon, IA 52314. Phone: 319-895-6924. E-mail:\nIkrouse@cornellcollege.edu. Send SASE for information letter. Sells one variety of Reid's Yellow Dent-type open-pollinated untreated com in one-bushel bags, for livestock feed or silage. Retail and wholesale. Offered 1 corn variety in 2004.\n\n"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>text_split[[<span class="dv">1</span>]][<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] " Abbott and Cobb, Inc., PO Box 307, Feasterville, PA\n19053-0307. Phone: 215-245-6666. Web Site: www.acseed com. Strictly wholesale. Specializes in sweet com, water-melon, peppers and squash. Offered 55 non-hybrid vegetable varieties in 2004 including: 2 beet, 2 collard, 2 com, 2 cress, 2 kale, 2 melon, 1 mustard greens, 1 okra, 1 onion other, 3 parsley, 4 pepper, 2 radish, I rutabaga, 2 spinach, 15 squash,\n3 Swiss chard, 2 turnip, 4 watermelon and 4 miscellaneous.\n\n"</code></pre>
+</div>
+</div>
+<p>It looks pretty good. The first item in the list has a length of 261 (<em>almost</em> the same as our IDs). And if we look at a few we see that the first is empty but the rest are stand-alone company profiles. So Let’s make this first item (minus the first row) into a data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>text_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"text"</span> <span class="ot">=</span> text_split[[<span class="dv">1</span>]][<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And let’s bind it to our IDs. Note, we feel confident binding this because these are the same IDs we used to split on – this is why we organized them into alphabetical order!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ids_df, text_df)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    id
+1  Ab2
+2  ABB
+3  Ada
+4  AG7
+5 AL25
+6  AL6
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             text
+1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Abbe Hills Seed, L. J. Krouse, 825 Abbe Hills Road,\nMt. Vernon, IA 52314. Phone: 319-895-6924. E-mail:\nIkrouse@cornellcollege.edu. Send SASE for information letter. Sells one variety of Reid's Yellow Dent-type open-pollinated untreated com in one-bushel bags, for livestock feed or silage. Retail and wholesale. Offered 1 corn variety in 2004.\n\n
+2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Abbott and Cobb, Inc., PO Box 307, Feasterville, PA\n19053-0307. Phone: 215-245-6666. Web Site: www.acseed com. Strictly wholesale. Specializes in sweet com, water-melon, peppers and squash. Offered 55 non-hybrid vegetable varieties in 2004 including: 2 beet, 2 collard, 2 com, 2 cress, 2 kale, 2 melon, 1 mustard greens, 1 okra, 1 onion other, 3 parsley, 4 pepper, 2 radish, I rutabaga, 2 spinach, 15 squash,\n3 Swiss chard, 2 turnip, 4 watermelon and 4 miscellaneous.\n\n
+3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Adams-Briscoe Seed Co., 325 E. Second St., P.O. Box 19, Jackson, GA 30233-0019. Phone: 770-775-7826. Fax:\n770-775-7122. E-mail: abseed@juno.com. Web Site:\nwww.abseed.com. Free catalog. Specializes in farm, lawn and wildlife seed that is grown in the southeastern U.S.\nRetail and wholesale. Offered 125 non-hybrid vegetable varieties in 2004 including: 16 bean, 1 beet, 1 broccoli, 4\ncabbage, 1 Chinese cabbage, 3 collard, 9 com, 19 cowpea, 3\ncucumber, 1 eggplant, 2 kale, 4 lettuce, 10 lima, 4 melon, 2 mustard greens, 4 okra, 6 pea, 6 pepper, 3 radish, 1 spinach, 9 squash, 1 sunflower ornamental, 1 sunflower edible, 4 tomato, 4 turnip, 1 miscellaneous leguminosae and 5 miscel-\nlaneous.\n\n
+4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Agrestal Organic Heritage Seed Co., P.O. Box 646,\nGormley, ON LOH 1G0, Canada. Fax: 905-888-0094. E-mail: agrestal@sympatico.ca. Free catalog: Small, family-owned and operated Canadian seed company offering certified organic open-pollinated heirloom seed. Retail and wholesale. Offered 171 non-hybrid vegetable varieties in 2004 including: 14 bean, 4 beet, 7 carrot, 1 Chinese cabbage, 17 com, 8 cucumber, 3 eggplant, 3 endive, 2 kale, 27 lettuce, 4 melon, 1 mustard greens, 3 okra, 2 onion other, 2 parsley, 9 pea, 10 pepper, 5 radish, 1 spinach, 12 squash, 3 sunflower omamental, 3 sunflower edible, 2 Swiss chard, 1 tepary, 22 tomato, 1 miscellaneous leguminosae and 4 miscellaneous.\n\n
+5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Ken Allan, 61 S. Bartlett St., Kingston, ON K7K 1X3, Canada. E-mail: allan@kingston.net. Send SASE for catalog (in Canada), or 50-cent Canadian stamp or SI (in U.S.).\nSpecializes in organically grown vegetable seeds, particularly sweet potatoes and tall peas. Sweet potatoes for Canada only.\nRetail only. Offered 28 non-hybrid vegetable varieties in 2004 including: 2 bean, 1 com, 3 pea, 3 pepper, 14 sweet potato and 5 tomato.\n\n
+6  Along the Garden Path, A Keenan Family Renaissance, General Delivery, Springbrook, ON KOK 3C0, Canada. Web Site: www.eagle.ca/~-akeenan/Gardenpath html. On-line catalog. Commited to preserving heritage vegetable varieties. Offered 36 non-hybrid vegetable varieties in 2004 including: 2 bean, 3 cucumber, 1 eggplant, 1 ground cherry, 4 lettuce, 1 lima, 1 pea, 3 pepper, 4 squash and 16 tomato\n\nAlB Alberta Nurseries and Seeds Ltd., Box 20, Bowden, AB TOM OKO, Canada. Phone: 403-224-3544. Fax: 403-224-\n2455. Free catalog in Canada only; $2 to U. S. Specializes in early-maturing seeds for short-season areas. Retail and internet sales. Offered 131 non-hybrid vegetable varieties in 2004 including: 1 asparagus, 17 bean, 5 beet, 1 broccoli, 1 brussels sprout, 5 cabbage, 6 carrot, 2 cauliflower, 1 celeriac, 2 celery, 1 Chinese cabbage, 2 cress, 5 cucumber, I endive, 1\nfava bean, 1 fennel, 1 garlic, 1 kale, 2 kohlrabi, 1 leek, 9 lettuce, 1 onion bunching, 3 onion common, 1 onion multi-plier, 2 onion other, 2 parsley, 3 parsnip, 11 pea, 4 pepper, 2 potato, 9 radish, 1 runner bean, 2 rutabaga, 1 salsify, 10 squash, I sunflower edible, 2 Swiss chard, 5 tomato, 1 turnip, 1 watermelon, I miscellaneous leguminosae and 2 miscel-\nTaneous.\n\n</code></pre>
+</div>
+</div>
+<p>Excellent. Now we have split our data based on IDs. Now we have our text data as a data frame. One good tip is to clean things up a little bit by cleaning whitespace on the sides.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">trimws</span>(df<span class="sc">$</span>id)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">trimws</span>(df<span class="sc">$</span>text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bonus-test-as-data-extraction" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-test-as-data-extraction">Bonus test as data extraction</h3>
+<p>To finalize these data, let’s ask ourselves some bonus questions about these data. For instance:</p>
+<ol type="1">
+<li>Which of these companies work with organic varieties?</li>
+<li>Which of these companies have my favorite vegetables?</li>
+<li>Which state are these companies in?</li>
+</ol>
+<p>We can apply what we’ve learned from <code>stringr</code> to answer these questions easily now that we have unique blocks of text to work with. For instance, we can use a <code>str_detect</code> now to get TRUE or FALSE for each row for certain patterns, like organic.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>organic <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(df<span class="sc">$</span>text, <span class="st">'[Oo]rganic'</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df<span class="sc">$</span>organic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE FALSE  TRUE  TRUE FALSE</code></pre>
+</div>
+</div>
+<p>We can do something similar for vegetables, where we can create a pattern of our favorite vegetables, with alternates, and look for that in each row.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>faves <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"[Ss]quash"</span>, <span class="st">"[Rr]adish"</span>, <span class="st">"[Bb]ean"</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>faves_pattern <span class="ot">&lt;-</span> <span class="fu">paste</span>(faves, <span class="at">collapse =</span> <span class="st">"|"</span>)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>fave_veg <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(df<span class="sc">$</span>text, faves_pattern)</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>fave_veg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+   61   199 </code></pre>
+</div>
+</div>
+<p>Last, we can make a pattern with all of the state abbreviations, though instead of separating just by word boundaries, we want to be careful to grab true state abbreviations. We can do that by making the pattern in front of it include a comma and a space, since we know that is how addresses are written.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CA"</span>, <span class="st">"OR"</span>, <span class="st">"WA"</span>, <span class="st">"ID"</span>, <span class="st">"NV"</span>, <span class="st">"AZ"</span>, <span class="st">"UT"</span>, <span class="st">"NM"</span>, <span class="st">"CO"</span>, <span class="st">"WY"</span>, <span class="st">"MT"</span>,</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"AK"</span>, <span class="st">"HI"</span>, <span class="st">"ND"</span>, <span class="st">"SD"</span>, <span class="st">"KS"</span>, <span class="st">"NE"</span>, <span class="st">"MN"</span>, <span class="st">"IA"</span>, <span class="st">"MO"</span>, <span class="st">"WI"</span>, <span class="st">"IL"</span>,</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"MI"</span>, <span class="st">"IN"</span>, <span class="st">"OH"</span>, <span class="st">"TX"</span>, <span class="st">"OK"</span>, <span class="st">"AR"</span>, <span class="st">"LA"</span>, <span class="st">"KY"</span>, <span class="st">"TN"</span>, <span class="st">"MS"</span>, <span class="st">"AL"</span>,</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"FL"</span>, <span class="st">"GA"</span>, <span class="st">"SC"</span>, <span class="st">"NC"</span>, <span class="st">"VA"</span>, <span class="st">"PR"</span>, <span class="st">"WV"</span>, <span class="st">"MD"</span>, <span class="st">"DE"</span>, <span class="st">"NJ"</span>, <span class="st">"PA"</span>,</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"NY"</span>, <span class="st">"CT"</span>, <span class="st">"RI"</span>, <span class="st">"MA"</span>, <span class="st">"VT"</span>, <span class="st">"NH"</span>, <span class="st">"ME"</span>)</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>states_pattern <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">',</span><span class="sc">\\</span><span class="st">s'</span>, states, <span class="st">'</span><span class="sc">\\</span><span class="st">b'</span>)</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>states_pattern <span class="ot">&lt;-</span> <span class="fu">paste</span>(states_pattern, <span class="at">collapse =</span> <span class="st">"|"</span>)</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(states_pattern, <span class="dv">1</span>,<span class="dv">47</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ",\\sCA\\b|,\\sOR\\b|,\\sWA\\b|,\\sID\\b|,\\sNV\\b|,\\sAZ\\b"</code></pre>
+</div>
+</div>
+<p>Now we can <code>str_extract</code>, rather than <code>str_detect</code> to pull out the matches from the text. We are going to use <code>str_extract</code> instead of _all to choose the first one. There is still some data messiness beyond this lesson that would need addressed if we wanted to use _all.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>state <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(df<span class="sc">$</span>text, states_pattern)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df<span class="sc">$</span>state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ", IA" ", PA" ", GA" NA     NA     NA    </code></pre>
+</div>
+</div>
+<p>Great, we have state IDs, but let’s make those a little cleaner with <code>str_remove</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>state <span class="ot">&lt;-</span> <span class="fu">trimws</span>(<span class="fu">str_remove</span>(df<span class="sc">$</span>state, <span class="st">",</span><span class="sc">\\</span><span class="st">s"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we can create an output with our local picks by filtering based on what we’ve identified in our data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>local_picks <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(df, state <span class="sc">==</span> <span class="st">"CA"</span> <span class="sc">&amp;</span> organic <span class="sc">==</span> T <span class="sc">&amp;</span> fave_veg <span class="sc">==</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>local_picks<span class="sc">$</span>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Natural Gardening Company, PO Box 750776,\nPetaluma, CA 94975-0776. E-mail: info@naturalgardening .com. Web Site: www.naturalgardening.com. Free catalog.\nStarted the nation's first certified organic nursery. Offers untreated vegetable seeds, many certified organic and certified organic seedlings. Specializes in tomatoes. Offered 151 non-hybrid vegetable varieties in 2004 including: 1 amaranth, 1 artichoke, 13 bean, 3 beet, 1 broccoli, 1 broccoli raab, 1 cabbage, 1 cardoon, 3 carrot, 1 cauliflower, 1 celery,\n3 Chinese cabbage, 1 chicory, 1 collard, 1 comsalad, 3\ncucumber, 5 eggplant, 2 endive, 1 fava bean, 1 fennel. 1 gourd, 2 kale, 1 leek, 16 lettuce, I lima, 5 melon, I mustard greens, 3 onion common, 2 onion other, 2 parsley, 1 parsnip, 4 pca, 9 pepper, 4 potato, 2 radish, 1 runner bean, 2 soybean, 1 spinach, 13 squash, 1 sunflower ornamental, 1 sunflower edible, 3 Swiss chard, 1 tomatillo, 23 tomato, 1 turip, 1 watermelon and 4 miscellaneous."                                                                                                                                                                                                                                                                                                     
+[2] "Peaceful Valley Farm Supply, PO Box 2209, Grass\nValley, CA 95945. Phone: 888-784-1722. Fax: 530-272-\n4794. E-mail: contact@groworganic.com. Web Site: www. groworganic.com. Tools and supplies for organic gardeners and farmers since 1976. Free 140-page catalog with over 2,000 items including fertilizers, organic and/or open-pollinated vegetable and cover crop seeds, weed and pest controls, beneficial insects, irrigation and (in Fall) bulbs, garlic, onions, potatoes and fruit trees. Offered 343 non-hybrid vegetable varieties in 2004 including: 3 amaranth, 1 artichoke, 1 asparagus, 15 bean, 8 beet, 3 broccoli, 1 broccoli raab, 1 brussels sprout, 3 cabbage, 9 carrot, 1 cauliflower, 1\nceleriac, 1 celery, 6 Chinese cabbage, 1 chicory, 15 com, 2\ncress, 8 cucumber, 2 eggplant, 2 endive, 2 fava bean, 2\nfennel, 9 garlic, 4 gourd, 5 kale, 4 leek, 32 lettuce, 1 lima, 10 melon, 2 mustard greens, 2 okra, 2 onion bunching, 7 onion common, 2 onion multiplier, 2 onion other, 5 parsley, 1 parsnip, 10 pea, 21 pepper, 8 potato, 7 radish, 2 runner bean, 1 sorghum, 1 soybean, 3 spinach, 21 squash, 7 sunflower oramental, 5 sunflower edible, 6 Swiss chard, 2 tomatillo, 53 tomato, 2 turnip, watermelon, 2 miscellaneous leguminosae and 12 miscellaneous.\n31"
+[3] "Terra Organics, LLC, PO Box 171, Maxwell, CA\n95955. Free price list. The first wholesale seed company to offer a full line of multiple species of organic seeds.\nWholesale only. Offered 221 non-hybrid vegetable varieties in 2004 including: 15 bean, 7 beet, 2 broccoli, 1 broccoli raab, 2 cabbage, 5 carrot, 1 cauliflower, 1 celery, 4 Chinese cabbage, 1 chicory, 3 com, 1 cowpea, 5 cucumber, 2\neggplant, 2 endive, 1 fennel, 1 gourd, 5 kale, I leek, 20 lettuce, 1 lima, 5 melon, 2 mustard greens, 2 okra, 1 onion bunching, 2 onion common, 2 onion other, 3 parsley, 4 pea, 29 pepper, 6 radish, I spinach, 17 squash, 2 sunflower edible,\n5 Swiss chard, 2 tomatillo, 45 tomato, 3 turnip, 3 watermelon and 6 miscellaneous."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01_text-data.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Text as data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

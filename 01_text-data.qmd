@@ -1,0 +1,84 @@
+---
+title: "Text as data"
+format: html
+---
+
+## Where to get text data?  
+
+Text is everywhere! And can be a really cool core or supplemental data source. But how do we get text data? One way is through web scraping, through which can collect all sorts of structured and unstructured data for us. Check out this other [D-RUG tutorial on web scraping](https://d-rug.github.io/scrape-public-salary-data/).
+
+Another common way to get text data is through electronic reading of texts, such as reading from PDFs or using OCR on images files. PDFs are _usually_ easier to read and work will with packages like `pdftools::`, while images can be a bit trickier, even with good OCR functionality like in `tesseract::`. 
+
+## Data: Seed Savers Exchange catalogs  
+
+The data we're going to be working with are data from the Seed Savers Exchange catalogs, primarily from 2004. We have these catalogs across several years, including 2015 and 2020, which we have in PDF format. PDFs are easier to work with, and so we can use `pdftools` for these files.
+
+For example, we can read in a page from the 2015 catalog and see what it looks like
+
+::: {layout-ncol=2}
+![](img/census15_top.png)
+![](img/census15.png)
+:::
+
+We can read in that page and use the `cat` function to print it out accounting for page formatting and everything:  
+
+```{r, warning = F, message = F}
+text15 <- pdftools::pdf_text("~/Box/quantifying_seed_innovation/sse/sse_census15.pdf")[12]
+cat(text15)
+```
+
+These data look good. But what about the OCR option? Right outside the DataLab is the 2004 Garden Seed Inventory, but having this book in paper form makes our job more challenging.  
+
+::: {layout-ncol=2}
+![](img/sse_catalog.jpeg)
+
+![](img/p25_plain.png)
+:::
+
+Because we don't have PDFs for these catalogs, the next best option is to treat them as images and OCR them in. For example, I can take an image of each page, then read them in with the `tesseract::ocr` function: 
+
+```{r}
+p25 <- tesseract::ocr('img/p25_plain.png')
+cat(p25)
+```
+
+
+Unfortunately, OCRing from an image can be tough. Even with typed font, we're really not picking up some important pieces of information. 
+
+But, Apple / privately developed technology to the rescue. I recently learned that iPhones have some pretty advanced technology for reading text. As I hover over text with an iPhone, I am prompted with some yellow brackets and a text document symbol in the bottom right. I can capture this this by touching that text document symbol and the iPhone will pull out a frame. Then I can use my finger to highlight the text and make sure that iPhone is reading the lines correctly. Last, I can copy that text, paste it in a note, and mail myself a plain text file. So cool!
+
+
+::: {layout-ncol=2}
+![](img/p25_boxed.PNG)
+![](img/p25_selected.PNG)
+![](img/p25_highlight.PNG)
+![](img/p25_notes.PNG)
+:::
+
+And after some patience, we can have a whole plain text file. We'll be using this together:
+
+```{r}
+text <- readtext::readtext("data/sse_seed_inventory_04.txt")
+```
+
+Note what `readtext` does -- it puts all the text in one column and a document id in another. 
+
+```{r}
+head(text)
+```
+
+We'll just want to worry about the text column, so we can go ahead and subset that.
+
+```{r}
+text <- text[,2]
+```
+
+And now we can glimpse the beginning of the text using the `substr` function in base R. Looking good. 
+
+```{r}
+cat(substr(text, 1, 1515))
+```
+
+So, now let's get into actually using these data...
+
+

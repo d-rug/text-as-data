@@ -7,4 +7,4 @@ format:
 
 # Overview {.unnumbered}
 
-YOUR DESCRIPTION, LEARNING GOALS, PREREQUISITES, ETC
+This mini-workshop is a quick intro demonstrating different approaches for reading in text into R, and how to manipulate text data using `stringr` and regular expressions.  

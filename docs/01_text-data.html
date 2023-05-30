@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Text as data - 2&nbsp; Text as data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02_working-with-text.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Text as data</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="https://github.com/d-rug/d-rug.github.io/raw/main/DRUG_final_cobalt.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Text as data</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/d-rug/text-as-data" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="./Text-as-data.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_text-data.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Text as data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_working-with-text.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Working with text</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#where-to-get-text-data" id="toc-where-to-get-text-data" class="nav-link active" data-scroll-target="#where-to-get-text-data">Where to get text data?</a></li>
+  <li><a href="#data-seed-savers-exchange-catalogs" id="toc-data-seed-savers-exchange-catalogs" class="nav-link" data-scroll-target="#data-seed-savers-exchange-catalogs">Data: Seed Savers Exchange catalogs</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Text as data</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="where-to-get-text-data" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-get-text-data">Where to get text data?</h2>
+<p>Text is everywhere! And can be a really cool core or supplemental data source. But how do we get text data? One way is through web scraping, through which can collect all sorts of structured and unstructured data for us. Check out this other <a href="https://d-rug.github.io/scrape-public-salary-data/">D-RUG tutorial on web scraping</a>.</p>
+<p>Another common way to get text data is through electronic reading of texts, such as reading from PDFs or using OCR on images files. PDFs are <em>usually</em> easier to read and work will with packages like <code>pdftools::</code>, while images can be a bit trickier, even with good OCR functionality like in <code>tesseract::</code>.</p>
+</section>
+<section id="data-seed-savers-exchange-catalogs" class="level2">
+<h2 class="anchored" data-anchor-id="data-seed-savers-exchange-catalogs">Data: Seed Savers Exchange catalogs</h2>
+<p>The data we’re going to be working with are data from the Seed Savers Exchange catalogs, primarily from 2004. We have these catalogs across several years, including 2015 and 2020, which we have in PDF format. PDFs are easier to work with, and so we can use <code>pdftools</code> for these files.</p>
+<p>For example, we can read in a page from the 2015 catalog and see what it looks like</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/census15_top.png" class="img-fluid"> <img src="img/census15.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>We can read in that page and use the <code>cat</code> function to print it out accounting for page formatting and everything:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text15 <span class="ot">&lt;-</span> pdftools<span class="sc">::</span><span class="fu">pdf_text</span>(<span class="st">"~/Box/quantifying_seed_innovation/sse/sse_census15.pdf"</span>)[<span class="dv">12</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(text15)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                   SOURCES
+Bse 2BSeeds, 280 E 1st Ave #1055, Broomfield Co 80038-1055. Email:                  Oregon. We steward rare, diverse and resilient seed varieties for
+custserv@2bseeds.com. Phone: (303)465-3395. Offered 183 varieties in                ecologically-minded farmers, gardeners and seed savers. Our seed is
+2015, including: 2 Artichoke, 1 Asparagus, 12 Bean, 3 Beet, 1 Bok Choy,             adapted to the Pacific Northwest and other short season northern climates.
+1 Broccoli, 1 Brussels Sprouts, 3 Cabbage, 1 Carrot, 1 Celery, 1 Chinese            We sell only public domain, open pollinated seed, as well as many diverse
+Cabbage, 2 CHIVES &amp; GARLIC CHIVES, 1 Collard, 1 Cress,                              genepool mixes. All our seed is grown by either us or a few regional friends
+10 Cucumber, 1 Eggplant, 1 Endive, 2 Gourd, 2 Kale, 2 Leek, 17 Lettuce,             who help with isolation needs. NONE of our seed are proprietary hybrids
+1 Lima Bean, 1 Luffa, 3 Melon, 2 Misc Vegetables, 1 Mizuna, 2 Mustard               (F1), patented, PVP, or genetically modified (GMO). All of our seed is grown
+Greens, 3 Okra, 7 ONION COMMON, 8 Pea, 29 Pepper, 8 Radish,                         without chemical fertilizers, herbicides or pesticides, and none of it is
+1 Soybean, 1 Spinach, 18 Squash, 2 Swiss Chard, 2 Tomatillo,                        treated. Our farm has been Certified Organic by Oregon Tilth since 2013.
+25 Tomato, 3 Watermelon/Citron                                                      Offered 340 varieties in 2015, including: 5 Amaranth, 1 Arugula, 37 Bean,
+                                                                                    2 Beet, 1 Bok Choy, 2 Broccoli, 1 Brussels Sprouts, 1 Burdock,
+Be1 A Bean Collector's Window Email: upadam@comcast.net. Russ Crow                  2 Cabbage, 1 Carrot, 1 Cauliflower, 1 Celeriac, 1 Chickpea/Garbanzo
+is a bean collector from Woodstock, Illinois. He got his start as a member of       Bean, 6 Chicory/Radicchio, 1 Chinese Cabbage, 8 Corn, 1 Cowpea,
+John Withee's Wanigan Associates network of bean preservationists in the            2 Cress, 8 Cucumber, 5 Eggplant, 7 Endive, 2 Fava/Broad Bean,
+1970s. He is also a long-time member of Seed Savers Exchange. Offered               2 Fennel, 8 Garlic, 1 Ground Cherry, 7 Kale, 3 Leek, 29 Lettuce, 5 Melon,
+264 varieties in 2015, including: 247 Bean, 17 Lima Bean                            2 Misc Legumes, 2 Misc Vegetables, 2 Mustard Greens, 1 ONION
+                                                                                    BUNCHING, 4 ONION COMMON, 1 ONION MULTIPLIER, 2 Parsley,
+                                                                                    1 Parsnip, 4 Pea, 17 Pepper, 1 Purslane, 3 Quinoa, 1 Radish, 1 Runner
+Agh1 A Goodly Heritage, 38012 W 196th St, Rayville MO 64084. Email:                 Bean, 3 Rutabaga, 1 Salsify, 1 Scorzonera/Black Salsify, 1 Soybean,
+aghfservices@att.net. Phone: (256)590-4727. We are a small family                   2 Spinach, 19 Squash, 4 Sunflower, 1 Tepary Bean, 3 Tomatillo,
+operated nursery. We sell natural-grown old varieties of fruit trees, berry         106 Tomato, 1 Turnip, 5 Watermelon/Citron
+plants, and grapevines. Retail only. Offered 2 varieties in 2015, including:
+2 Garlic
+                                                                                    AL24 Albert Lea Seed House , PO Box 127, Albert Lea MN 56007. Phone:
+                                                                                    (507)373-3161. Albert Lea Seed began in 1923 as a family-owned seed
+Wh5 A.P. Whaley LLC, 1928 Syvrud Rd, Mt Horeb WI 53572. Email:                      store offering field seed and garden seed. Today we are three generations
+awhaley@mhtc.net. Phone: (608)437-9081. Offered 337 varieties in 2015,              strong offering knowledge and experience in seed and crop production,
+including: 1 Arugula, 31 Bean, 6 Beet, 5 Carrot, 2 Corn, 9 Cucumber,                processing, and cultural practices that benefits any sized farm operation.
+7 Eggplant, 1 Ground Cherry, 2 Kale, 15 Lettuce, 3 Lima Bean, 11 Melon,             Offered 163 varieties in 2015, including: 1 Arugula, 1 Asparagus, 14 Bean,
+1 Misc Cucurbits, 1 Misc Vegetables, 5 ONION COMMON, 1 ONION                        2 Beet, 1 Bok Choy, 2 Broccoli, 1 Brussels Sprouts, 4 Cabbage, 5 Carrot,
+MULTIPLIER, 15 Pea, 26 Pepper, 6 Radish, 4 Runner Bean, 1 Spinach,                  1 Cauliflower, 1 Celery, 8 Corn, 1 Cowpea, 9 Cucumber, 2 Eggplant,
+32 Squash, 6 Sunflower, 128 Tomato, 18 Watermelon/Citron                            2 Gourd, 1 Ground Cherry, 1 Kale, 2 Kohlrabi, 4 Lettuce, 1 Lima Bean,
+                                                                                    1 Luffa, 4 Melon, 1 Okra, 1 ONION BUNCHING, 3 ONION COMMON,
+Ab2 Abbe Hills Seed, L. J. Krouse , 825 Abbe Hills Road, Mt Vernon IA               1 Parsley, 1 Parsnip, 10 Pea, 7 Pepper, 14 Potato, 9 Radish,
+52314. Email: lkrouse@abbehills.com. Phone: (319)895-6924. Sells one                1 Rutabaga, 1 Spinach, 24 Squash, 2 Sunflower, 2 Swiss Chard,
+variety of Reid's Yellow Dent-type open-pollinated untreated corn for               1 Tomatillo, 7 Tomato, 1 Turnip, 8 Watermelon/Citron
+livestock feed or silage. Retail and wholesale. Check www.abbehills.com for
+current information. Offered 1 varieties in 2015, including: 1 Corn                 All Allen, Sterling and Lothrop, 191 U.S. Rt. 1, Falmouth ME 04105-1385.
+                                                                                    Email: shirley@allensterlinglothrop.com. Phone: (207)781-4142. Fax:
+ABB Abbott &amp; Cobb, Inc. , 4151 East Street Rd, Feasterville PA                      (207)781-4143. Specializes in vegetable seeds adapted to northern New
+19053-0307. Email: acseed@abbottcobb.com. Phone: (215)245-6666.                     England. Company founded in 1911. Retail only. Offered 122 varieties in
+Strictly wholesale! Specializes in sweet corn, watermelon, peppers and              2015, including: 2 Arugula, 12 Bean, 4 Beet, 1 Broccoli, 1 Brussels
+squash. Offered 1 varieties in 2015, including: 1 Bean                              Sprouts, 4 Cabbage, 6 Carrot, 1 Cauliflower, 1 Collard, 1 Corn, 1 Cress,
+                                                                                    7 Cucumber, 1 Eggplant, 1 Endive, 1 Fava/Broad Bean, 1 Fennel, 3 Kale,
+Ada Adams-Briscoe Seed Co., 325 E. Second St. , P.O. Box 19, Jackson                2 Kohlrabi, 1 Leek, 8 Lettuce, 2 Lima Bean, 1 Melon, 2 Misc Vegetables,
+GA 30233-0019. Email: abseed@juno.com. Phone: (877)775-7826.                        1 Okra, 1 ONION BUNCHING, 1 ONION COMMON, 2 Parsley, 1 Parsnip,
+Specializes in farm, lawn and wildlife seed that is grown in the southeastern       13 Pea, 3 Pepper, 7 Radish, 1 Runner Bean, 1 Rutabaga, 1 Spinach,
+U.S. Retail and wholesale. Offered 172 varieties in 2015, including:                16 Squash, 1 Sunflower, 3 Swiss Chard, 3 Tomato, 1 Turnip,
+18 Bean, 2 Beet, 1 Broccoli, 5 Cabbage, 3 Carrot, 1 Cauliflower,                    1 Watermelon/Citron, 1 Yard Long Bean
+1 Chicory/Radicchio, 4 Collard, 9 Corn, 20 Cowpea, 8 Cucumber,
+1 Eggplant, 2 Gourd, 3 Kale, 7 Lettuce, 10 Lima Bean, 4 Melon, 2 Misc               Am1                American                Meadows                   Email:
+Legumes, 5 Misc Vegetables, 2 Mustard Greens, 3 Okra, 7 Pea,                        customerservice@americanmeadows.com. Phone: (877)309-7333. Our
+7 Pepper, 5 Radish, 1 Rutabaga, 4 Sorghum, 5 Soybean, 1 Spinach,                    approach is simple; for years we have offered gardeners only the best
+10 Squash, 3 Sunflower, 7 Tomato, 4 Turnip, 7 Watermelon/Citron                     wildflower seeds, flower bulbs, perennial plants and flowers, vegetable
+                                                                                    seeds and flower seed packets; the ones we grow in our own gardens. We
+Ad5 Adaptive Seeds, Seed Ambassadors Project , 25079 Brush Creek                    stand ready to help you grow with confidence! Offered 58 varieties in 2015,
+Road, Sweet Home OR 97386. Email: seed@adaptiveseeds.com. Phone:                    including: 1 Arugula, 5 Bean, 1 Beet, 1 Broccoli, 2 Cabbage, 1 Carrot,
+((541) 367)1105. Adaptive Seeds was established in 2009 by Andrew Still             1 Cauliflower, 2 Corn, 3 Cucumber, 1 Eggplant, 6 Lettuce, 2 Melon,
+and Sarah Kleeger, and is based at Open Oak Farm in Sweet Home,                     1 Misc Vegetables, 1 Okra, 1 ONION BUNCHING, 2 Parsley, 6 Pea,
+
+                                                                                1</code></pre>
+</div>
+</div>
+<p>These data look good. But what about the OCR option? Right outside the DataLab is the 2004 Garden Seed Inventory, but having this book in paper form makes our job more challenging.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/sse_catalog.jpeg" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/p25_plain.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>Because we don’t have PDFs for these catalogs, the next best option is to treat them as images and OCR them in. For example, I can take an image of each page, then read them in with the <code>tesseract::ocr</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p25 <span class="ot">&lt;-</span> tesseract<span class="sc">::</span><span class="fu">ocr</span>(<span class="st">'img/p25_plain.png'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(p25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ee
+_gisher's Garden Store, PO Box 236, 20750 E, Frontage Road, B,
+Fis Titje, MT 59714. Phone: 406-388-6052. Free catalog. Breeders and
+era vers of vegetable and flower seeds for high altitudes and short
+erswing seasons, including many’ varieties originated by them Een
+eyed in Montana in 1923 ae
+Florida Mycology Research Center, PO Box 8104 Pen acola, FL
+GE 32505. Phone: 850-327-4378. $10 for their main catalog (free if you
+mention reading about them in this Garden Seed Inventors), eonigioe
+the world’s largest selection of mushroom spores and live cultures
+growing supplies and publications. Annual subscription to their
+quarterly color mushroom journal, which contains actual [i e mushroom
+spore print samples, is $20. Retail and whol esale prices are listed in the
+same catalog. . +t
+Fo4 Four Seasons Nursery, Division of Plantron, Inc., 17 on
+Bloomington, IL 61704. Free catalog. a a
+Fo7 Fox Hollow Seed Company, PO Box 148, Me p
+Phone: 888-548-7333. Free catalog. Spec
+heirloom, untreated varieties, including man e
+certified organic. Retail only. €
+Fre Fred's Plant Farm, 4589 Ralston Road
+800-550-2575. Free catalog. Extensive col
+yams. Currently offering nine types, inclu
+and wholesale prices are on the same pric
+Fun Fungi Perfecti, PO Box 7634, Olympi
+9292. Fax: 360-426-9377. Family-own
+f _ quality gourmet and medicinal mu
+cd chutes for their cultivation. R</code></pre>
+</div>
+</div>
+<p>Unfortunately, OCRing from an image can be tough. Even with typed font, we’re really not picking up some important pieces of information.</p>
+<p>But, Apple / privately developed technology to the rescue. I recently learned that iPhones have some pretty advanced technology for reading text. As I hover over text with an iPhone, I am prompted with some yellow brackets and a text document symbol in the bottom right. I can capture this this by touching that text document symbol and the iPhone will pull out a frame. Then I can use my finger to highlight the text and make sure that iPhone is reading the lines correctly. Last, I can copy that text, paste it in a note, and mail myself a plain text file. So cool!</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="img/p25_boxed.PNG" class="img-fluid"> <img src="img/p25_selected.PNG" class="img-fluid"> <img src="img/p25_highlight.PNG" class="img-fluid"> <img src="img/p25_notes.PNG" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>And after some patience, we can have a whole plain text file. We’ll be using this together:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(<span class="st">"data/sse_seed_inventory_04.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note what <code>readtext</code> does – it puts all the text in one column and a document id in another.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>readtext object consisting of 1 document and 0 docvars.
+$text
+[1] "# A data frame: 1 × 2"                                
+[2] "  doc_id                    text               "      
+[3] "* &lt;chr&gt;                     &lt;chr&gt;              "      
+[4] "1 sse_seed_inventory_04.txt \"\\\"Ab2 Abbe H\\\"...\""
+
+$summary
+$summary[[1]]
+NULL
+
+
+attr(,"class")
+[1] "trunc_mat"</code></pre>
+</div>
+</div>
+<p>We’ll just want to worry about the text column, so we can go ahead and subset that.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> text[,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now we can glimpse the beginning of the text using the <code>substr</code> function in base R. Looking good.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">substr</span>(text, <span class="dv">1</span>, <span class="dv">1515</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ab2 Abbe Hills Seed, L. J. Krouse, 825 Abbe Hills Road,
+Mt. Vernon, IA 52314. Phone: 319-895-6924. E-mail:
+Ikrouse@cornellcollege.edu. Send SASE for information letter. Sells one variety of Reid's Yellow Dent-type open-pollinated untreated com in one-bushel bags, for livestock feed or silage. Retail and wholesale. Offered 1 corn variety in 2004.
+
+ABB Abbott and Cobb, Inc., PO Box 307, Feasterville, PA
+19053-0307. Phone: 215-245-6666. Web Site: www.acseed com. Strictly wholesale. Specializes in sweet com, water-melon, peppers and squash. Offered 55 non-hybrid vegetable varieties in 2004 including: 2 beet, 2 collard, 2 com, 2 cress, 2 kale, 2 melon, 1 mustard greens, 1 okra, 1 onion other, 3 parsley, 4 pepper, 2 radish, I rutabaga, 2 spinach, 15 squash,
+3 Swiss chard, 2 turnip, 4 watermelon and 4 miscellaneous.
+
+Ada Adams-Briscoe Seed Co., 325 E. Second St., P.O. Box 19, Jackson, GA 30233-0019. Phone: 770-775-7826. Fax:
+770-775-7122. E-mail: abseed@juno.com. Web Site:
+www.abseed.com. Free catalog. Specializes in farm, lawn and wildlife seed that is grown in the southeastern U.S.
+Retail and wholesale. Offered 125 non-hybrid vegetable varieties in 2004 including: 16 bean, 1 beet, 1 broccoli, 4
+cabbage, 1 Chinese cabbage, 3 collard, 9 com, 19 cowpea, 3
+cucumber, 1 eggplant, 2 kale, 4 lettuce, 10 lima, 4 melon, 2 mustard greens, 4 okra, 6 pea, 6 pepper, 3 radish, 1 spinach, 9 squash, 1 sunflower ornamental, 1 sunflower edible, 4 tomato, 4 turnip, 1 miscellaneous leguminosae and 5 miscel-
+laneous.</code></pre>
+</div>
+</div>
+<p>So, now let’s get into actually using these data…</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Overview</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02_working-with-text.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-title">Working with text</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
