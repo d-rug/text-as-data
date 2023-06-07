@@ -62,7 +62,7 @@ But, Apple / privately developed technology to the rescue. I recently learned th
 And after some patience, we can have a whole plain text file. We'll be using this together:
 
 ```{r}
-text <- readtext::readtext("data/sse_seed_inventory_04.txt")
+text <- readtext::readtext("https://raw.githubusercontent.com/d-rug/text-as-data/main/data/sse_seed_inventory_04.txt")
 ```
 
 Note what `readtext` does -- it puts all the text in one column and a document id in another. 

@@ -8,7 +8,7 @@ editor: visual
 First things first, let's make sure we have all of our text data in. We can go ahead and read it in from GitHub. 
 
 ```{r}
-text <- readtext::readtext("data/sse_seed_inventory_04.txt")[,2]
+text <- readtext::readtext("https://raw.githubusercontent.com/d-rug/text-as-data/main/data/sse_seed_inventory_04.txt")[,2]
 ```
 
 Let's also make sure that we have our main package installed and loaded: the `stringr` package.
@@ -168,7 +168,7 @@ Now that we have a sense of regular expressions, we can return to our `text` str
 Let's start with a key piece of information that can help us: a dictionary of company IDs. This is data I had to request from the catalog (though I could have made it by hand, many dictionaries are, or extracted it some other way). Let's read in this data frame of IDs:  
 
 ```{r}
-ids <- read.csv('data/ids_04.csv')
+ids <- read.csv('https://raw.githubusercontent.com/d-rug/text-as-data/main/data/ids_04.csv')
 ```
 
 ### Extracting matches  

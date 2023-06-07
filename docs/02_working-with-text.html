@@ -222,7 +222,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="set-up">Set-up</h2>
 <p>First things first, let’s make sure we have all of our text data in. We can go ahead and read it in from GitHub.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(<span class="st">"data/sse_seed_inventory_04.txt"</span>)[,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(<span class="st">"https://raw.githubusercontent.com/d-rug/text-as-data/main/data/sse_seed_inventory_04.txt"</span>)[,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s also make sure that we have our main package installed and loaded: the <code>stringr</code> package.</p>
 <div class="cell">
@@ -556,7 +556,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now that we have a sense of regular expressions, we can return to our <code>text</code> strong. Because where things really get interesting is if you have a <em>dictionary</em> that you can use to match to and extract based on. For instance, if we take at look at our data, we have all of these seed companies and associated data – where they’re from, what they sell, how to contact them, etc. What we need to turn this into a nice clean data set is a <strong>key</strong> or dictionary to reference as a pattern for separating our text and pulling out uniform information.</p>
 <p>Let’s start with a key piece of information that can help us: a dictionary of company IDs. This is data I had to request from the catalog (though I could have made it by hand, many dictionaries are, or extracted it some other way). Let’s read in this data frame of IDs:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/ids_04.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'https://raw.githubusercontent.com/d-rug/text-as-data/main/data/ids_04.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="extracting-matches" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-matches">Extracting matches</h3>
